@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,6 +13,8 @@ type Todo struct {
 	ID        int    `json:"id"`
 	Text      string `json:"text"`
 	Completed bool   `json:"completed"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 // todos is a list of todos
@@ -44,6 +47,8 @@ func (s *Server) createTodo(c *gin.Context) {
 		Text:      request.Text,
 		ID:        len(todos) + 1,
 		Completed: false,
+		CreatedAt: time.Now().Format(time.RFC3339),
+		UpdatedAt: time.Now().Format(time.RFC3339),
 	}
 	todos = append(todos, todo)
 	c.JSON(http.StatusCreated, todo)
@@ -85,6 +90,7 @@ func (s *Server) updateTodo(c *gin.Context) {
 			}
 			todo.Text = request.Text
 			todo.Completed = request.Completed
+			todo.UpdatedAt = time.Now().Format(time.RFC3339)
 			todos[index] = todo
 			c.JSON(http.StatusOK, todo)
 			return
