@@ -7,4 +7,9 @@ export const MainStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  error: {
+    color: "red",
+    fontSize: 20,
+    margin: 10,
+  },
 });

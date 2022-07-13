@@ -47,8 +47,8 @@ func (s *Server) createTodo(c *gin.Context) {
 		Text:      request.Text,
 		ID:        len(todos) + 1,
 		Completed: false,
-		CreatedAt: time.Now().Format(time.RFC3339),
-		UpdatedAt: time.Now().Format(time.RFC3339),
+		CreatedAt: time.Now().UTC().Format(time.RFC3339),
+		UpdatedAt: time.Now().UTC().Format(time.RFC3339),
 	}
 	todos = append(todos, todo)
 	c.JSON(http.StatusCreated, todo)
@@ -90,7 +90,7 @@ func (s *Server) updateTodo(c *gin.Context) {
 			}
 			todo.Text = request.Text
 			todo.Completed = request.Completed
-			todo.UpdatedAt = time.Now().Format(time.RFC3339)
+			todo.UpdatedAt = time.Now().UTC().Format(time.RFC3339)
 			todos[index] = todo
 			c.JSON(http.StatusOK, todo)
 			return

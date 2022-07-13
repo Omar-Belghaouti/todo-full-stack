@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 import { EditTodoStyles } from "./styles";
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome";
@@ -15,7 +15,7 @@ import { Todo } from "../../models";
 interface EditTodoProps {
   visible: boolean;
   todo: Todo | null;
-  onSubmit: () => void;
+  onSubmit: (text: string, completed: boolean) => void;
   onCancel: () => void;
 }
 
@@ -33,6 +33,15 @@ export const EditTodo: FC<EditTodoProps> = ({
       setCompleted(todo.completed);
     }
   }, [todo]);
+
+  const onSubmitHandler = useCallback(() => {
+    if (text.length > 0) {
+      onSubmit(text, completed);
+      onCancel();
+    } else {
+      alert("Please enter some text");
+    }
+  }, [onSubmit, onCancel, text, completed]);
 
   return (
     <Modal
@@ -64,7 +73,7 @@ export const EditTodo: FC<EditTodoProps> = ({
             </TouchableOpacity>
           </View>
           <View style={EditTodoStyles.row}>
-            <Button title="Submit" onPress={onSubmit} />
+            <Button title="Submit" onPress={onSubmitHandler} />
             <Button title="Cancel" onPress={onCancel} color="red" />
           </View>
         </View>

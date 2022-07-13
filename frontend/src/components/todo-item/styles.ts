@@ -29,4 +29,7 @@ export const TodoItemStyles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-end",
   },
+  horizontalSpace: {
+    marginHorizontal: 10,
+  },
 });

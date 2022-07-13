@@ -4,14 +4,14 @@ import { FC, useCallback, useState } from "react";
 import { AddTodoStyles } from "./styles";
 
 interface AddTodoProps {
-  onAddPress: () => void;
+  onAddPress: (text: string) => void;
 }
 
 export const AddTodo: FC<AddTodoProps> = ({ onAddPress }) => {
   const [text, setText] = useState("");
   const onAddPressHandler = useCallback(() => {
     if (text.length > 0) {
-      onAddPress();
+      onAddPress(text);
       setText("");
     } else {
       alert("Please enter some text");
